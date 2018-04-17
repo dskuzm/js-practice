@@ -1,12 +1,11 @@
-var inputValue = document.getElementById('search').value,
-    inputSubmit = document.getElementById('submit'),
-    repoLink = document.getElementById('repoLink');
-
+var inputText = document.querySelector('[data-role=inputText]').value,
+    inputSubmit = document.querySelector('[data-role=searchButton]'),
+    repoLink = document.querySelector('[data-role=repoLink]');
+    console.log(inputText)
+    
 inputSubmit.addEventListener("click", function() {
-    var inputValue = document.getElementById('search').value,
-        xmlHttp = new XMLHttpRequest();
-        
-        xmlHttp.open('GET', 'https://api.github.com/search/repositories?q=$'+ inputValue, true);
+    var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET', 'https://api.github.com/search/repositories?q=$qwe', true);
     
         xmlHttp.onreadystatechange = function (oEvent) {
             if (xmlHttp.readyState === 4) {
@@ -15,7 +14,7 @@ inputSubmit.addEventListener("click", function() {
                         var link = (obj.items[6].html_url);//test code
                         repoLink.setAttribute('href', link);
                         repoLink.innerHTML = link;
-                        console.log(obj);
+                        console.log(obj)
                 } else {
                     console.log('Error', xmlHttp.statusText);
                 }
