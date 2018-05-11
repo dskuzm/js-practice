@@ -6,12 +6,8 @@ var inputSubmit = document.querySelector('[data-role=searchButton]'),
 
 inputText.addEventListener("change", checkInputValue);
 inputSubmit.addEventListener("click", getData);
-inputSubmit.addEventListener("click", clear);
 
-
-
-
-// если инпут не пустой или пустой
+// // если инпут не пустой или пустой
 function checkInputValue() {
     if ( this.value === '') {
         inputSubmit.setAttribute('disabled', 'true');
@@ -31,22 +27,11 @@ function getData() {
           if (xmlHttp.readyState === 4) {
               if (xmlHttp.status === 200) {
                   var data = JSON.parse(xmlHttp.responseText),
-                      link = (data.items[1].html_url);
-                
-                  var newLink = document.createElement('a');
-                      newLink.setAttribute('href', link);
-                      newLink.setAttribute('class', 'new-link');
-                      newLink.innerHTML = link;
-                
-                  var closeIcon = document.createElement('span');
-                      closeIcon.setAttribute('class', 'close-icon');
-                      closeIcon.innerHTML = 'X';
-
-                  var newLi = document.createElement('li');
+                      link = (data.items[1].html_url),
+                      newLi = document.createElement('li'),
+                      liItem = '<a class="new-link" href="' + link +'">' + link + '</a><span class="close-icon">close</span>';
+                      newLi.innerHTML = liItem;
                       listLink.appendChild(newLi);
-                      newLi.appendChild(closeIcon);
-                      newLi.appendChild(newLink);
-
               } else {
                   console.log('Error', xmlHttp.statusText);
               }
@@ -54,15 +39,6 @@ function getData() {
       };
       xmlHttp.send(null);
 };
-
-function clear() {
-  inputText = inputText.val = 'qweqwreqwr';
-  console.log(inputText);
-  console.log(typeof inputText);
-}
-
-
-
 
 
 
@@ -88,7 +64,11 @@ function clear() {
 
 
 
-
+// function test() {
+//   var LiItem = '<li><a href="#">link1</a></li>';
+//   listLink.innerHTML = LiItem;
+// }
+// test()
 
 
 
