@@ -1,19 +1,29 @@
 var inputSubmit = document.querySelector('[data-role=searchButton]'),
     inputHolder = document.querySelector('[data-role=inputHolder]'),
     listLink = document.querySelector('[data-role=listLink]'),
-    inputText = document.querySelector('[data-role=inputText]');
+    inputText = document.querySelector('[data-role=inputText]'),
+    closeIcon = document.querySelector('[data-role=close]');
 
 
 inputText.addEventListener("change", checkInputValue);
 inputSubmit.addEventListener("click", getData);
+listLink.addEventListener("click", removeItem);
 
-// // если инпут не пустой или пустой
 function checkInputValue() {
     if ( this.value === '') {
         inputSubmit.setAttribute('disabled', 'true');
     } else {
         inputSubmit.removeAttribute('disabled');     
     }
+};
+
+function removeItem(closeIcon) {
+  var el = closeIcon.target,
+      container,
+      list;
+      container = el.parentNode;
+      list = container.parentNode;
+      list.removeChild(container);
 };
 
 
@@ -29,7 +39,7 @@ function getData() {
                   var data = JSON.parse(xmlHttp.responseText),
                       link = (data.items[1].html_url),
                       newLi = document.createElement('li'),
-                      liItem = '<a class="new-link" href="' + link +'">' + link + '</a><span class="close-icon">close</span>';
+                      liItem = '<a class="new-link" href="' + link +'">' + link + '</a><button class="close-icon" data-role="close">close</button>';
                       newLi.innerHTML = liItem;
                       listLink.appendChild(newLi);
               } else {
@@ -39,43 +49,6 @@ function getData() {
       };
       xmlHttp.send(null);
 };
-
-
-
-// click on icon close and delete parent
-// var imageList = document.querySelector(".image-list");
-// imageList.addEventListener("click", removeClickedBlock);
-
-// imageList.addEventListener("click", removeClickedBlock);
-
-
-// function removeClickedBlock(e) {
-//     console.log(e)
-//     var el = e.target,
-//         imageContainer,
-//         list;
-//         imageContainer = el.parentNode;
-//         list = imageContainer.parentNode;
-//         list.removeChild(imageContainer);
-//   };
-
-
-
-
-
-
-// function test() {
-//   var LiItem = '<li><a href="#">link1</a></li>';
-//   listLink.innerHTML = LiItem;
-// }
-// test()
-
-
-
-
-
-
-
 
 
 
