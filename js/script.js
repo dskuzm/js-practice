@@ -5,7 +5,7 @@ var inputSubmit = document.querySelector('[data-role=searchButton]'),
     closeIcon = document.querySelector('[data-role=close]');
 
 
-inputText.addEventListener("change", checkInputValue);
+inputText.addEventListener("input", checkInputValue);
 inputSubmit.addEventListener("click", getData);
 listLink.addEventListener("click", removeItem);
 
@@ -29,9 +29,8 @@ function removeItem(closeIcon) {
 
 
 function getData() {
-  var xmlHttp = new XMLHttpRequest(),
-      inputText = document.querySelector('[data-role=inputText]').value;
-      xmlHttp.open('GET', 'https://api.github.com/search/repositories?q=$' + inputText, true);
+  var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open('GET', 'https://api.github.com/search/repositories?q=$' + inputText.value, true);
 
       xmlHttp.onload = function (oEvent) {
           if (xmlHttp.readyState === 4) {
@@ -39,9 +38,12 @@ function getData() {
                   var data = JSON.parse(xmlHttp.responseText),
                       link = (data.items[1].html_url),
                       newLi = document.createElement('li'),
-                      liItem = '<a class="new-link" href="' + link +'">' + link + '</a><button class="close-icon" data-role="close">close</button>';
+                      liItem = '<button class="close-icon" data-role="close">close</button><a class="new-link" href="' + link + '" target="_blank">' + link + '</a>';
                       newLi.innerHTML = liItem;
                       listLink.appendChild(newLi);
+
+                      inputText.value = '';
+                      inputSubmit.setAttribute('disabled', 'true');
               } else {
                   console.log('Error', xmlHttp.statusText);
               }
