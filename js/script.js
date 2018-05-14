@@ -1,8 +1,7 @@
 var inputSubmit = document.querySelector('[data-role=searchButton]'),
     inputHolder = document.querySelector('[data-role=inputHolder]'),
     listLink = document.querySelector('[data-role=listLink]'),
-    inputText = document.querySelector('[data-role=inputText]'),
-    closeIcon = document.querySelector('[data-role=close]');
+    inputText = document.querySelector('[data-role=inputText]');
 
 
 inputText.addEventListener("input", checkInputValue);
@@ -10,23 +9,17 @@ inputSubmit.addEventListener("click", getData);
 listLink.addEventListener("click", removeItem);
 
 function checkInputValue() {
-    if ( this.value === '') {
+    if ( inputText.value === '') {
         inputSubmit.setAttribute('disabled', 'true');
     } else {
-        inputSubmit.removeAttribute('disabled');     
+        inputSubmit.removeAttribute('disabled');
     }
 };
 
-function removeItem(closeIcon) {
-  var el = closeIcon.target,
-      container,
-      list;
-      container = el.parentNode;
-      list = container.parentNode;
-      list.removeChild(container);
-};
-
-
+function removeItem(event) {
+    if (!event.target.classList.contains('remove-button')) return;
+    event.target.parentNode.hidden = !event.target.parentNode.hidden;
+}
 
 function getData() {
   var xmlHttp = new XMLHttpRequest();
@@ -38,12 +31,12 @@ function getData() {
                   var data = JSON.parse(xmlHttp.responseText),
                       link = (data.items[1].html_url),
                       newLi = document.createElement('li'),
-                      liItem = '<button class="close-icon" data-role="close">close</button><a class="new-link" href="' + link + '" target="_blank">' + link + '</a>';
+                      liItem = '<button class="remove-button" data-role="close">close</button><a class="new-link" href="' + link + '" target="_blank">' + link + '</a>';
                       newLi.innerHTML = liItem;
                       listLink.appendChild(newLi);
 
                       inputText.value = '';
-                      inputSubmit.setAttribute('disabled', 'true');
+                      checkInputValue();
               } else {
                   console.log('Error', xmlHttp.statusText);
               }
@@ -51,11 +44,6 @@ function getData() {
       };
       xmlHttp.send(null);
 };
-
-
-
-
-
 
 
 

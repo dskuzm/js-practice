@@ -40,7 +40,7 @@ li {
     color: aqua;
     
 }
-.close-icon {
+.remove-button {
     /* float: right; */
     margin: 0 10px;
     text-decoration: none;
