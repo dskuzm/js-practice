@@ -28,15 +28,38 @@ function getData() {
       xmlHttp.onload = function (oEvent) {
           if (xmlHttp.readyState === 4) {
               if (xmlHttp.status === 200) {
-                  var data = JSON.parse(xmlHttp.responseText),
-                      link = (data.items[1].html_url),
-                      newLi = document.createElement('li'),
-                      liItem = '<button class="remove-button" data-role="close">close</button><a class="new-link" href="' + link + '" target="_blank">' + link + '</a>';
-                      newLi.innerHTML = liItem;
-                      listLink.appendChild(newLi);
+                  var data = JSON.parse(xmlHttp.responseText)
+                      link = (data.items[1].html_url);
+                //   console.log(data);
+                  console.log(typeof data);
+                //   data.items;
 
-                      inputText.value = '';
-                      checkInputValue();
+                    //   link = (data.items[1].html_url),
+                    //   newLi = document.createElement('li'),
+                    //   liItem = '<button class="remove-button" data-role="close">close</button><a class="new-link" href="' + link + '" target="_blank">' + link + '</a>';
+                    //   newLi.innerHTML = liItem;
+                    //   listLink.appendChild(newLi);
+
+                    //   inputText.value = '';
+                    //   checkInputValue();
+                    createLocalStorage()
+                    function createLocalStorage() {
+                        var obj = [
+                            {
+                                obj.push(data.items[1]);
+                            }
+
+                        ];
+
+                            
+
+                        // var serialObj = JSON.stringify(obj); //сериализуем его
+
+                        localStorage.setItem("myKey", obj); //запишем его в хранилище по ключу "myKey"
+
+                        // var returnObj = JSON.parse(localStorage.getItem("myKey")) //спарсим его обратно объект
+
+                    }
               } else {
                   console.log('Error', xmlHttp.statusText);
               }
@@ -44,7 +67,6 @@ function getData() {
       };
       xmlHttp.send(null);
 };
-
 
 
 
